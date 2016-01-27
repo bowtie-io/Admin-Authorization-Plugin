@@ -1,0 +1,5 @@
+# /admin-install/.bowtie.yml
+---
+
+permits:
+  status: registered

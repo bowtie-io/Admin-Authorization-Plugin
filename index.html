@@ -1,0 +1,63 @@
+---
+layout: landing
+title: Admin Access
+permalink: null
+exclude_from_nav: false
+published: true
+---
+
+
+ {% include nav-bootstrap.html %}
+<section class="section container">
+  <a name="admin"></a>
+   <div class='form-group col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3'>
+     <h2>Admin Access</h2>
+     <div class="signed-out text-center">
+       <p>Create an account to request admin access to for this site.</p>
+       <a class="btn btn-warning" href="/users/sign_up">Sign Up</a>
+     </div>
+
+     <div class="signed-in">
+       <p>Request a secret key from your site administrator and enter it below.</p>
+       <div id="admin" class="user-profile text-left">
+         <div class='form-group'>
+           <div class="input">
+             <label class="text">
+               <i class="fa fa-key"></i> Secret Key
+             </label>
+             <input aria-required="true" class="string text form-control" id="admin_key" maxlength="255" name="profile[key]" placeholder="Ask your site admin for the key"  size="255" type="text" />
+           </div>
+         </div>
+         <br>
+         <br>
+         <div class='form-actions text-center'>
+           <input id="update_admin" class="button btn btn-default" name="commit" type="submit" value="Save Key">
+         </div>
+       </div>
+     </div>
+   </div>
+ </section>
+
+
+  <script type="text/javascript">
+   $(function(){
+     $("#update_admin").on("click", function(){
+       var adminKey = $('#admin_key').val();
+       // Store the key to the Bowtie User Profile
+
+       bowtie.user.profile({
+         key: adminKey
+       }).done(function() {
+          alert( "Key Saved" );window.location.href = '/admin/';
+        })
+       .fail(function() {
+         alert( "Could Not Save!" );
+       });
+     });
+   });
+
+   bowtie.user.profile(function(profile){
+     $("#admin_key").val(profile.key);
+   });
+
+  </script>
